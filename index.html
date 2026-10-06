@@ -3,39 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- SEO básico -->
   <meta name="description" content="AJOLÁ — Marca de ropa nacida en Andalucía. Lo nuestro, puesto." />
   <meta name="robots" content="index, follow" />
-
-  <!-- Theme color (barra del navegador en móvil) -->
   <meta name="theme-color" content="#004D3F" />
-
-  <!-- Open Graph -->
   <meta property="og:type"        content="website" />
   <meta property="og:url"         content="https://somosajola.es/" />
   <meta property="og:title"       content="AJOLÁ — Lo nuestro, puesto." />
   <meta property="og:description" content="Una marca nacida en Andalucía para llevar nuestra tierra de otra manera." />
   <meta property="og:locale"      content="es_ES" />
-  <!-- og:image: añadir cuando dispongas de imagen de marca (1200×630px) -->
-
-  <!-- Twitter Card -->
   <meta name="twitter:card"        content="summary" />
   <meta name="twitter:title"       content="AJOLÁ — Lo nuestro, puesto." />
   <meta name="twitter:description" content="Una marca nacida en Andalucía para llevar nuestra tierra de otra manera." />
-
-  <!-- Favicon — sustituir favicon.png por el archivo definitivo -->
-  <link rel="icon"             type="image/png" href="assets/favicon.png" />
-  <link rel="apple-touch-icon" href="assets/favicon.png" />
-
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <link rel="apple-touch-icon"      href="assets/favicon.png" />
   <title>AJOLÁ — Lo nuestro, puesto.</title>
-
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
 
   <style>
-    /* ── Reset & Base ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
@@ -44,6 +30,7 @@
       --fondo:  #FAF7EE;
       --negro:  #1F1F1F;
       --gris:   #6B6B6B;
+      --gris-claro: #E8E4DA;
       --serif:  'Cormorant Garamond', Georgia, serif;
       --sans:   'Inter', system-ui, sans-serif;
     }
@@ -55,188 +42,676 @@
       color: var(--negro);
       font-family: var(--sans);
       font-weight: 300;
-      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
       display: flex;
-      flex-direction: column;
       align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 3rem;
+      background: rgba(250,247,238,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(0,77,63,0.08);
     }
 
-    /* ── Header ── */
-    header {
-      width: 100%;
+    .nav-logo {
       display: flex;
-      justify-content: center;
-      padding: 2.5rem 2rem 0;
-    }
-
-    .logo-wrap {
-      display: flex;
-      flex-direction: column;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.6rem;
+      text-decoration: none;
     }
 
-    .logo-simbolo img { display: block; }
+    .nav-logo img { width: 32px; height: 32px; }
 
-    .logo-nombre {
+    .nav-logo-nombre {
       font-family: var(--serif);
-      font-size: 2.6rem;
+      font-size: 1.3rem;
       font-weight: 600;
       letter-spacing: 0.18em;
       color: var(--verde);
       text-transform: uppercase;
-      line-height: 1;
     }
 
-    /* ── Hero ── */
-    main {
-      flex: 1;
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--negro);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--verde); }
+
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+
+    .nav-toggle span {
+      display: block;
+      width: 22px;
+      height: 1px;
+      background: var(--negro);
+      transition: 0.3s;
+    }
+
+    /* ── HERO ── */
+    #inicio {
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 5rem 2rem 4rem;
-      max-width: 680px;
-      width: 100%;
+      padding: 8rem 2rem 5rem;
     }
 
-    .tagline {
+    .hero-simbolo {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.1s forwards;
+    }
+
+    .hero-nombre {
       font-family: var(--serif);
-      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      color: var(--verde);
+      text-transform: uppercase;
+      line-height: 1;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.2s forwards;
+    }
+
+    .hero-tagline {
+      font-family: var(--serif);
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
       font-weight: 300;
       font-style: italic;
       color: var(--verde);
-      letter-spacing: 0.04em;
-      margin-bottom: 2rem;
+      letter-spacing: 0.06em;
+      margin-top: 1rem;
       opacity: 0;
-      transform: translateY(12px);
-      animation: fadeUp 0.9s ease 0.3s forwards;
+      animation: fadeUp 0.9s ease 0.4s forwards;
     }
 
-    .divisor {
+    .hero-divisor {
       width: 40px;
       height: 1px;
       background: var(--dorado);
-      margin: 0 auto 2rem;
+      margin: 2rem auto;
       opacity: 0;
-      animation: fadeUp 0.9s ease 0.5s forwards;
+      animation: fadeUp 0.9s ease 0.55s forwards;
     }
 
-    .descripcion {
-      font-size: clamp(0.9rem, 2.2vw, 1.05rem);
-      line-height: 1.85;
+    .hero-desc {
+      font-size: clamp(0.88rem, 2vw, 1rem);
+      line-height: 1.9;
       color: var(--gris);
-      font-weight: 300;
-      max-width: 520px;
+      max-width: 480px;
       opacity: 0;
       animation: fadeUp 0.9s ease 0.7s forwards;
     }
 
-    .badge {
-      margin-top: 3.5rem;
+    .hero-cta {
+      margin-top: 3rem;
       display: inline-block;
-      border: 1px solid var(--dorado);
-      color: var(--dorado);
+      border: 1px solid var(--verde);
+      color: var(--verde);
       font-family: var(--sans);
-      font-size: 0.7rem;
+      font-size: 0.72rem;
       font-weight: 500;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      padding: 0.55rem 1.4rem;
+      padding: 0.85rem 2.2rem;
+      text-decoration: none;
+      transition: background 0.25s, color 0.25s;
       opacity: 0;
-      animation: fadeUp 0.9s ease 0.9s forwards;
+      animation: fadeUp 0.9s ease 0.85s forwards;
     }
 
-    /* ── Footer ── */
-    footer {
+    .hero-cta:hover {
+      background: var(--verde);
+      color: var(--fondo);
+    }
+
+    /* ── SECCIÓN GENÉRICA ── */
+    section {
+      padding: 6rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
       width: 100%;
-      padding: 2.5rem 2rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.9rem;
-      border-top: 1px solid rgba(0,77,63,0.1);
     }
 
-    .social-label {
+    .seccion-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--dorado);
+      margin-bottom: 1rem;
+    }
+
+    .seccion-titulo {
+      font-family: var(--serif);
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 400;
+      color: var(--verde);
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+    }
+
+    .seccion-divisor {
+      width: 40px;
+      height: 1px;
+      background: var(--dorado);
+      margin-bottom: 3rem;
+    }
+
+    /* ── COLECCIONES ── */
+    #colecciones .coleccion-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+      border-top: 1px solid var(--gris-claro);
+      padding-top: 3rem;
+    }
+
+    .coleccion-info { }
+
+    .coleccion-numero {
+      font-family: var(--serif);
+      font-size: 5rem;
+      font-weight: 300;
+      color: var(--gris-claro);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .coleccion-nombre {
+      font-family: var(--serif);
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 600;
+      color: var(--negro);
+      margin-bottom: 0.75rem;
+      font-style: italic;
+    }
+
+    .coleccion-desc {
+      font-size: 0.9rem;
+      line-height: 1.8;
+      color: var(--gris);
+      margin-bottom: 1.5rem;
+      max-width: 380px;
+    }
+
+    .coleccion-link {
+      display: inline-block;
       font-size: 0.7rem;
       letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--verde);
+      text-decoration: none;
+      border-bottom: 1px solid var(--dorado);
+      padding-bottom: 2px;
+      transition: color 0.2s;
+    }
+
+    .coleccion-link:hover { color: var(--dorado); }
+
+    /* Placeholder imagen colección */
+    .coleccion-visual {
+      aspect-ratio: 3/4;
+      background: var(--gris-claro);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .coleccion-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .coleccion-visual-placeholder {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
       color: var(--gris);
     }
 
-    .social-link {
+    /* Futuras colecciones — insinuación elegante */
+    .colecciones-futuro {
+      margin-top: 4rem;
+      padding-top: 3rem;
+      border-top: 1px solid var(--gris-claro);
+      text-align: center;
+    }
+
+    .colecciones-futuro p {
       font-family: var(--serif);
-      font-size: 1.05rem;
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      font-style: italic;
+      color: var(--gris);
+      letter-spacing: 0.04em;
+    }
+
+    /* ── LA MARCA ── */
+    #la-marca {
+      background: var(--verde);
+      max-width: 100%;
+      padding: 7rem 2rem;
+    }
+
+    #la-marca .inner {
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    #la-marca .seccion-label { color: var(--dorado); opacity: 0.8; }
+
+    #la-marca .seccion-titulo { color: var(--fondo); }
+
+    #la-marca .seccion-divisor { margin: 0 auto 3rem; }
+
+    .marca-texto {
+      font-family: var(--serif);
+      font-size: clamp(1.1rem, 2.5vw, 1.45rem);
+      font-weight: 300;
+      line-height: 1.9;
+      color: rgba(250,247,238,0.85);
+      margin-bottom: 2rem;
+    }
+
+    .marca-claim {
+      font-family: var(--serif);
+      font-size: clamp(1.2rem, 3vw, 1.7rem);
+      font-style: italic;
+      color: var(--dorado);
+      letter-spacing: 0.06em;
+    }
+
+    /* ── LAS 8 PROVINCIAS ── */
+    .provincias-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--gris-claro);
+      border: 1px solid var(--gris-claro);
+    }
+
+    .provincia-item {
+      background: var(--fondo);
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      transition: background 0.25s;
+    }
+
+    .provincia-item:hover { background: #F0EDE3; }
+
+    .provincia-nombre {
+      font-family: var(--serif);
+      font-size: 1.1rem;
       font-weight: 400;
       color: var(--verde);
-      text-decoration: none;
       letter-spacing: 0.06em;
-      transition: color 0.25s ease;
     }
 
-    .social-link:hover { color: var(--dorado); }
+    .provincia-punto {
+      width: 4px;
+      height: 4px;
+      background: var(--dorado);
+      border-radius: 50%;
+      margin: 0.6rem auto 0;
+    }
 
-    .footer-copy {
+    /* ── PRÓXIMAMENTE ── */
+    #proximamente {
+      text-align: center;
+      border-top: 1px solid var(--gris-claro);
+    }
+
+    .proximamente-inner {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .proximamente-inner p {
+      font-size: 0.9rem;
+      line-height: 1.8;
+      color: var(--gris);
+      margin-bottom: 2rem;
+    }
+
+    .newsletter-form {
+      display: flex;
+      gap: 0;
+      max-width: 400px;
+      margin: 0 auto;
+      border: 1px solid var(--verde);
+    }
+
+    .newsletter-form input {
+      flex: 1;
+      padding: 0.8rem 1rem;
+      border: none;
+      background: transparent;
+      font-family: var(--sans);
+      font-size: 0.85rem;
+      color: var(--negro);
+      outline: none;
+    }
+
+    .newsletter-form input::placeholder { color: var(--gris); }
+
+    .newsletter-form button {
+      padding: 0.8rem 1.4rem;
+      background: var(--verde);
+      color: var(--fondo);
+      border: none;
+      font-family: var(--sans);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .newsletter-form button:hover { background: #003329; }
+
+    .newsletter-nota {
       font-size: 0.68rem;
       color: var(--gris);
-      letter-spacing: 0.08em;
-      opacity: 0.6;
-      margin-top: 0.5rem;
+      margin-top: 1rem;
+      opacity: 0.7;
     }
 
-    /* ── Animaciones ── */
+    /* ── FOOTER ── */
+    footer {
+      background: var(--negro);
+      padding: 4rem 2rem 2.5rem;
+      text-align: center;
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .footer-logo-nombre {
+      font-family: var(--serif);
+      font-size: 1.8rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      color: var(--fondo);
+      text-transform: uppercase;
+    }
+
+    .footer-tagline {
+      font-family: var(--serif);
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--dorado);
+      margin-top: 0.4rem;
+      letter-spacing: 0.06em;
+    }
+
+    .footer-divisor {
+      width: 30px;
+      height: 1px;
+      background: rgba(212,175,55,0.4);
+      margin: 2rem auto;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-links a {
+      font-size: 0.75rem;
+      color: rgba(250,247,238,0.6);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--dorado); }
+
+    .footer-legal {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+
+    .footer-legal a {
+      font-size: 0.65rem;
+      color: rgba(250,247,238,0.3);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      transition: color 0.2s;
+    }
+
+    .footer-legal a:hover { color: rgba(250,247,238,0.6); }
+
+    .footer-copy {
+      font-size: 0.65rem;
+      color: rgba(250,247,238,0.25);
+      letter-spacing: 0.08em;
+    }
+
+    /* ── ANIMACIONES ── */
     @keyframes fadeUp {
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* ── prefers-reduced-motion ── */
     @media (prefers-reduced-motion: reduce) {
-      .tagline,
-      .divisor,
-      .descripcion,
-      .badge {
-        animation: none;
-        opacity: 1;
-        transform: none;
+      .hero-simbolo, .hero-nombre, .hero-tagline,
+      .hero-divisor, .hero-desc, .hero-cta {
+        animation: none; opacity: 1; transform: none;
       }
     }
 
-    /* ── Responsive ── */
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: var(--fondo);
+        align-items: center;
+        justify-content: center;
+        gap: 2.5rem;
+      }
+
+      .nav-links.open { display: flex; }
+      .nav-links a { font-size: 1rem; }
+      .nav-toggle { display: flex; }
+
+      #colecciones .coleccion-card {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .coleccion-visual { max-height: 300px; }
+
+      .provincias-grid { grid-template-columns: repeat(2, 1fr); }
+
+      section { padding: 4rem 1.5rem; }
+    }
+
     @media (max-width: 480px) {
-      .logo-nombre { font-size: 2rem; }
-      main { padding: 3.5rem 1.5rem 3rem; }
+      .provincias-grid { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <div class="logo-wrap">
-      <img src="assets/simbolo.svg" alt="Símbolo AJOLÁ" width="72" height="72">
-      <div class="logo-nombre">AJOLÁ</div>
-    </div>
-  </header>
-
-  <main>
-    <p class="tagline">Lo nuestro, puesto.</p>
-    <div class="divisor"></div>
-    <p class="descripcion">
-      Una marca nacida en Andalucía para llevar nuestra tierra de otra manera.<br><br>
-      Diseños originales inspirados en nuestra forma de hablar, nuestro humor,
-      nuestras costumbres y la diversidad de las ocho provincias andaluzas.
-    </p>
-    <span class="badge">Próximamente</span>
-  </main>
-
-  <footer>
-    <span class="social-label">Síguenos</span>
-    <a class="social-link" href="https://instagram.com/somosajola" target="_blank" rel="noopener">
-      @somosajola
+  <!-- NAV -->
+  <nav>
+    <a href="#inicio" class="nav-logo">
+      <img src="assets/simbolo.svg" alt="Símbolo AJOLÁ" />
+      <span class="nav-logo-nombre">AJOLÁ</span>
     </a>
-    <p class="footer-copy">© 2026 AJOLÁ · somosajola.es</p>
+    <button class="nav-toggle" onclick="toggleNav()" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#inicio"      onclick="closeNav()">Inicio</a></li>
+      <li><a href="#colecciones" onclick="closeNav()">Colecciones</a></li>
+      <li><a href="#la-marca"    onclick="closeNav()">La marca</a></li>
+      <li><a href="#provincias"  onclick="closeNav()">Las 8 provincias</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="inicio">
+    <img src="assets/simbolo.svg" alt="Símbolo AJOLÁ" class="hero-simbolo" />
+    <h1 class="hero-nombre">AJOLÁ</h1>
+    <p class="hero-tagline">Lo nuestro, puesto.</p>
+    <div class="hero-divisor"></div>
+    <p class="hero-desc">
+      Una marca nacida en Andalucía para llevar nuestra tierra de otra manera.
+      Nuestra forma de hablar, nuestro humor, nuestras costumbres y la diversidad
+      de las ocho provincias andaluzas.
+    </p>
+    <a href="coleccion-01.html" class="hero-cta">Colección 01 — Quien sabe, sabe</a>
+  </section>
+
+  <!-- COLECCIONES -->
+  <section id="colecciones">
+    <p class="seccion-label">Colecciones</p>
+    <h2 class="seccion-titulo">Lo que llevamos puesto</h2>
+    <div class="seccion-divisor"></div>
+
+    <div class="coleccion-card">
+      <div class="coleccion-info">
+        <div class="coleccion-numero">01</div>
+        <h3 class="coleccion-nombre">Quien sabe, sabe</h3>
+        <p class="coleccion-desc">
+          Esas frases que decimos sabiendo perfectamente que probablemente no son verdad.
+          Expresiones cotidianas que no necesitan explicación para quien las conoce.
+        </p>
+        <a href="coleccion-01.html" class="coleccion-link">Ver colección</a>
+      </div>
+      <div class="coleccion-visual">
+        <!-- Sustituir por: <img src="assets/col01-cover.jpg" alt="Colección 01"> -->
+        <span class="coleccion-visual-placeholder">imagen colección 01</span>
+      </div>
+    </div>
+
+    <div class="colecciones-futuro">
+      <p>Más universos en camino.</p>
+    </div>
+  </section>
+
+  <!-- LA MARCA -->
+  <section id="la-marca">
+    <div class="inner">
+      <p class="seccion-label">La marca</p>
+      <h2 class="seccion-titulo">De aquí y para aquí</h2>
+      <div class="seccion-divisor"></div>
+      <p class="marca-texto">
+        AJOLÁ nace en Andalucía para contar nuestra tierra de otra manera.<br>
+        Nuestra forma de hablar, nuestro humor, nuestras costumbres y esas pequeñas cosas
+        que solo entendemos quienes las vivimos.
+      </p>
+      <p class="marca-texto">Ocho provincias. Muchas formas de ser andaluces.</p>
+      <p class="marca-claim">Lo nuestro, puesto.</p>
+    </div>
+  </section>
+
+  <!-- LAS 8 PROVINCIAS -->
+  <section id="provincias">
+    <p class="seccion-label">Las 8 provincias</p>
+    <h2 class="seccion-titulo">Toda Andalucía</h2>
+    <div class="seccion-divisor"></div>
+    <div class="provincias-grid">
+      <div class="provincia-item"><p class="provincia-nombre">Almería</p><div class="provincia-punto"></div></div>
+      <div class="provincia-item"><p class="provincia-nombre">Cádiz</p><div class="provincia-punto"></div></div>
+      <div class="provincia-item"><p class="provincia-nombre">Córdoba</p><div class="provincia-punto"></div></div>
+      <div class="provincia-item"><p class="provincia-nombre">Granada</p><div class="provincia-punto"></div></div>
+      <div class="provincia-item"><p class="provincia-nombre">Huelva</p><div class="provincia-punto"></div></div>
+      <div class="provincia-item"><p class="provincia-nombre">Jaén</p><div class="provincia-punto"></div></div>
+      <div class="provincia-item"><p class="provincia-nombre">Málaga</p><div class="provincia-punto"></div></div>
+      <div class="provincia-item"><p class="provincia-nombre">Sevilla</p><div class="provincia-punto"></div></div>
+    </div>
+  </section>
+
+  <!-- PRÓXIMAMENTE -->
+  <section id="proximamente">
+    <div class="proximamente-inner">
+      <p class="seccion-label">Novedades</p>
+      <h2 class="seccion-titulo">Más AJOLÁ en camino</h2>
+      <div class="seccion-divisor" style="margin: 0 auto 2rem;"></div>
+      <p>Nuevos diseños, nuevas colecciones, nuevas provincias.<br>Sé el primero en saberlo.</p>
+      <form class="newsletter-form" onsubmit="return false;">
+        <input type="email" placeholder="tu@correo.es" aria-label="Correo electrónico" />
+        <button type="submit">Avisar</button>
+      </form>
+      <p class="newsletter-nota">Próximamente disponible.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <p class="footer-logo-nombre">AJOLÁ</p>
+      <p class="footer-tagline">Lo nuestro, puesto.</p>
+      <div class="footer-divisor"></div>
+      <div class="footer-links">
+        <a href="https://instagram.com/somosajola" target="_blank" rel="noopener">@somosajola</a>
+        <a href="mailto:hola@somosajola.es">hola@somosajola.es</a>
+      </div>
+      <div class="footer-legal">
+        <a href="#">Aviso legal</a>
+        <a href="#">Privacidad</a>
+        <a href="#">Cookies</a>
+      </div>
+      <p class="footer-copy">© 2026 AJOLÁ · somosajola.es</p>
+    </div>
   </footer>
+
+  <script>
+    function toggleNav() {
+      document.getElementById('navLinks').classList.toggle('open');
+    }
+    function closeNav() {
+      document.getElementById('navLinks').classList.remove('open');
+    }
+  </script>
 
 </body>
 </html>

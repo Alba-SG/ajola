@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Colección 01 — Quien sabe, sabe. AJOLÁ, marca de ropa nacida en Andalucía." />
+  <meta name="theme-color" content="#004D3F" />
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://somosajola.es/coleccion-01.html" />
+  <meta property="og:title"       content="Colección 01 — Quien sabe, sabe · AJOLÁ" />
+  <meta property="og:description" content="Esas frases que decimos sabiendo perfectamente que probablemente no son verdad." />
+  <meta property="og:locale"      content="es_ES" />
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <link rel="apple-touch-icon"      href="assets/favicon.png" />
+  <title>Colección 01 — Quien sabe, sabe · AJOLÁ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --verde:      #004D3F;
+      --dorado:     #D4AF37;
+      --fondo:      #FAF7EE;
+      --negro:      #1F1F1F;
+      --gris:       #6B6B6B;
+      --gris-claro: #E8E4DA;
+      --serif:      'Cormorant Garamond', Georgia, serif;
+      --sans:       'Inter', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--fondo);
+      color: var(--negro);
+      font-family: var(--sans);
+      font-weight: 300;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 3rem;
+      background: rgba(250,247,238,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(0,77,63,0.08);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+    }
+    .nav-logo img { width: 32px; height: 32px; }
+    .nav-logo-nombre {
+      font-family: var(--serif);
+      font-size: 1.3rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      color: var(--verde);
+      text-transform: uppercase;
+    }
+    .nav-back {
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gris);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--verde); }
+
+    /* ── HERO COLECCIÓN ── */
+    .col-hero {
+      padding: 9rem 2rem 4rem;
+      text-align: center;
+      border-bottom: 1px solid var(--gris-claro);
+    }
+    .col-numero {
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--dorado);
+      margin-bottom: 0.75rem;
+    }
+    .col-titulo {
+      font-family: var(--serif);
+      font-size: clamp(2.2rem, 6vw, 4.5rem);
+      font-weight: 600;
+      font-style: italic;
+      color: var(--verde);
+      line-height: 1.1;
+      margin-bottom: 1.2rem;
+    }
+    .col-divisor {
+      width: 40px; height: 1px;
+      background: var(--dorado);
+      margin: 0 auto 1.5rem;
+    }
+    .col-desc {
+      font-family: var(--serif);
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      font-style: italic;
+      color: var(--gris);
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+
+    /* ── GRID PRODUCTOS ── */
+    .productos-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--gris-claro);
+      max-width: 1100px;
+      margin: 4rem auto;
+      padding: 0 2rem;
+    }
+
+    /* ── CARD PRODUCTO ── */
+    .producto-card {
+      background: var(--fondo);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Visor imagen */
+    .producto-visor {
+      position: relative;
+      aspect-ratio: 3/4;
+      background: var(--gris-claro);
+      overflow: hidden;
+    }
+
+    .producto-visor img {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: opacity 0.35s ease;
+    }
+
+    /* Placeholder elegante cuando no hay imagen */
+    .producto-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .placeholder-simbolo {
+      width: 48px; height: 48px;
+      opacity: 0.2;
+    }
+
+    .placeholder-texto {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gris);
+      opacity: 0.5;
+    }
+
+    /* Toggle delantera/trasera */
+    .vista-toggle {
+      position: absolute;
+      bottom: 1rem; left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 0;
+      background: rgba(250,247,238,0.9);
+      border: 1px solid rgba(0,77,63,0.15);
+    }
+
+    .vista-btn {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.4rem 0.9rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--gris);
+      transition: background 0.2s, color 0.2s;
+      white-space: nowrap;
+    }
+
+    .vista-btn.active {
+      background: var(--verde);
+      color: var(--fondo);
+    }
+
+    /* Info producto */
+    .producto-info {
+      padding: 1.4rem 1.5rem 1.8rem;
+      border-top: 1px solid var(--gris-claro);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .producto-frase {
+      font-family: var(--serif);
+      font-size: clamp(1rem, 2.2vw, 1.25rem);
+      font-style: italic;
+      color: var(--negro);
+      line-height: 1.3;
+    }
+
+    /* Selector de color */
+    .color-selector {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .color-label {
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gris);
+    }
+
+    .color-opciones {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .color-dot {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 1.5px solid transparent;
+      transition: border-color 0.2s, transform 0.15s;
+      position: relative;
+    }
+
+    .color-dot:hover { transform: scale(1.15); }
+
+    .color-dot.active {
+      border-color: var(--dorado);
+    }
+
+    /* Colores definidos */
+    .color-dot[data-color="crudo"]  { background: #F0EAD6; }
+    .color-dot[data-color="negro"]  { background: #1F1F1F; }
+    .color-dot[data-color="verde"]  { background: #004D3F; }
+
+    .color-nombre-actual {
+      font-size: 0.62rem;
+      color: var(--gris);
+      letter-spacing: 0.08em;
+    }
+
+    /* Badge estado */
+    .producto-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .producto-badge {
+      display: inline-block;
+      border: 1px solid var(--dorado);
+      color: var(--dorado);
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.8rem;
+    }
+
+    .producto-coleccion {
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gris);
+      opacity: 0.6;
+    }
+
+    /* ── VOLVER ── */
+    .col-volver {
+      text-align: center;
+      padding: 2rem 2rem 5rem;
+    }
+    .col-volver a {
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--verde);
+      text-decoration: none;
+      border-bottom: 1px solid var(--dorado);
+      padding-bottom: 2px;
+      transition: color 0.2s;
+    }
+    .col-volver a:hover { color: var(--dorado); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--negro);
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+    .footer-logo-nombre {
+      font-family: var(--serif);
+      font-size: 1.4rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      color: var(--fondo);
+      text-transform: uppercase;
+    }
+    .footer-tagline {
+      font-family: var(--serif);
+      font-size: 0.85rem;
+      font-style: italic;
+      color: var(--dorado);
+      margin-top: 0.3rem;
+    }
+    .footer-copy {
+      font-size: 0.65rem;
+      color: rgba(250,247,238,0.25);
+      letter-spacing: 0.08em;
+      margin-top: 1.5rem;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .productos-grid {
+        grid-template-columns: 1fr;
+        padding: 0 1.2rem;
+        margin: 2.5rem auto;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .producto-visor img { transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">
+      <img src="assets/simbolo.svg" alt="Símbolo AJOLÁ" />
+      <span class="nav-logo-nombre">AJOLÁ</span>
+    </a>
+    <a href="index.html#colecciones" class="nav-back">← Colecciones</a>
+  </nav>
+
+  <div class="col-hero">
+    <p class="col-numero">Colección 01</p>
+    <h1 class="col-titulo">Quien sabe, sabe</h1>
+    <div class="col-divisor"></div>
+    <p class="col-desc">
+      Esas frases que decimos sabiendo perfectamente<br>
+      que probablemente no son verdad.
+    </p>
+  </div>
+
+  <div class="productos-grid" id="productosGrid"></div>
+
+  <div class="col-volver">
+    <a href="index.html">← Volver a inicio</a>
+  </div>
+
+  <footer>
+    <p class="footer-logo-nombre">AJOLÁ</p>
+    <p class="footer-tagline">Lo nuestro, puesto.</p>
+    <p class="footer-copy">© 2026 AJOLÁ · somosajola.es</p>
+  </footer>
+
+  <script>
+    // ─────────────────────────────────────────────
+    // DATOS DE PRODUCTOS — editar aquí para añadir
+    // nuevos diseños, colores o imágenes
+    // ─────────────────────────────────────────────
+    const COLECCION = "Colección 01";
+
+    const COLORES = [
+      { id: "crudo", nombre: "Crudo"       },
+      { id: "negro", nombre: "Negro"       },
+      { id: "verde", nombre: "Verde oscuro" }
+    ];
+
+    // Para añadir imagen: "assets/productos/[slug]/[color]-[vista].webp"
+    // Si el archivo no existe, se muestra el placeholder automáticamente.
+    const PRODUCTOS = [
+      {
+        slug:  "ahora-despues",
+        frase: "Ahora después si eso me acerco",
+        colores: ["crudo", "negro", "verde"],  // ocultar un color: quitar del array
+        vistaDefault: "trasera"
+      },
+      {
+        slug:  "ya-estoy-saliendo",
+        frase: "Ya estoy saliendo",
+        colores: ["crudo", "negro", "verde"],
+        vistaDefault: "trasera"
+      },
+      {
+        slug:  "aqui-al-lao-compare",
+        frase: "Eso está aquí al lao, compare",
+        colores: ["crudo", "negro", "verde"],
+        vistaDefault: "trasera"
+      },
+      {
+        slug:  "una-mijita-na-mas",
+        frase: "Una mijita na más",
+        colores: ["crudo", "negro", "verde"],
+        vistaDefault: "trasera"
+      }
+    ];
+
+    // ─────────────────────────────────────────────
+    // RENDER
+    // ─────────────────────────────────────────────
+    function imgPath(slug, color, vista) {
+      return `assets/productos/${slug}/${color}-${vista}.webp`;
+    }
+
+    function renderProducto(p, index) {
+      const colorInicial  = p.colores[0];
+      const vistaInicial  = p.vistaDefault;
+      const cardId        = `card-${index}`;
+
+      const colorDotsHTML = p.colores.map(cid => {
+        const c = COLORES.find(x => x.id === cid);
+        const active = cid === colorInicial ? 'active' : '';
+        return `<span class="color-dot ${active}" data-color="${cid}" title="${c.nombre}"
+                  onclick="cambiarColor('${cardId}', '${p.slug}', '${cid}', this)"></span>`;
+      }).join('');
+
+      const colorNombreInicial = COLORES.find(x => x.id === colorInicial).nombre;
+
+      return `
+      <div class="producto-card" id="${cardId}">
+        <div class="producto-visor">
+          <div class="producto-placeholder">
+            <img src="assets/simbolo.svg" class="placeholder-simbolo" alt="" />
+            <span class="placeholder-texto">Imagen próximamente</span>
+          </div>
+          <img
+            id="${cardId}-img"
+            src="${imgPath(p.slug, colorInicial, vistaInicial)}"
+            alt="${p.frase}"
+            loading="lazy"
+            onerror="this.style.opacity='0'"
+            onload="this.style.opacity='1'"
+            style="opacity:0"
+          />
+          <div class="vista-toggle">
+            <button class="vista-btn ${vistaInicial === 'delantera' ? 'active' : ''}"
+              onclick="cambiarVista('${cardId}', '${p.slug}', 'delantera', this)">
+              Delantera
+            </button>
+            <button class="vista-btn ${vistaInicial === 'trasera' ? 'active' : ''}"
+              onclick="cambiarVista('${cardId}', '${p.slug}', 'trasera', this)">
+              Trasera
+            </button>
+          </div>
+        </div>
+        <div class="producto-info">
+          <p class="producto-frase">${p.frase}</p>
+          <div class="color-selector">
+            <span class="color-label">Color</span>
+            <div class="color-opciones">${colorDotsHTML}</div>
+            <span class="color-nombre-actual" id="${cardId}-color-nombre">${colorNombreInicial}</span>
+          </div>
+          <div class="producto-footer">
+            <span class="producto-badge">Próximamente</span>
+            <span class="producto-coleccion">${COLECCION}</span>
+          </div>
+        </div>
+      </div>`;
+    }
+
+    // Estado actual de cada card
+    const estado = {};
+
+    function initEstado(index, p) {
+      estado[`card-${index}`] = {
+        slug:  p.slug,
+        color: p.colores[0],
+        vista: p.vistaDefault
+      };
+    }
+
+    function actualizarImagen(cardId) {
+      const s   = estado[cardId];
+      const img = document.getElementById(`${cardId}-img`);
+      if (!img) return;
+      img.style.opacity = '0';
+      img.src = imgPath(s.slug, s.color, s.vista);
+    }
+
+    function cambiarColor(cardId, slug, colorId, dotEl) {
+      estado[cardId].color = colorId;
+      // Actualizar dots
+      dotEl.closest('.color-opciones').querySelectorAll('.color-dot')
+        .forEach(d => d.classList.remove('active'));
+      dotEl.classList.add('active');
+      // Nombre color
+      const nombre = COLORES.find(x => x.id === colorId).nombre;
+      document.getElementById(`${cardId}-color-nombre`).textContent = nombre;
+      actualizarImagen(cardId);
+    }
+
+    function cambiarVista(cardId, slug, vista, btnEl) {
+      estado[cardId].vista = vista;
+      btnEl.closest('.vista-toggle').querySelectorAll('.vista-btn')
+        .forEach(b => b.classList.remove('active'));
+      btnEl.classList.add('active');
+      actualizarImagen(cardId);
+    }
+
+    // Montaje
+    const grid = document.getElementById('productosGrid');
+    PRODUCTOS.forEach((p, i) => {
+      initEstado(i, p);
+      grid.innerHTML += renderProducto(p, i);
+    });
+  </script>
+
+</body>
+</html>
