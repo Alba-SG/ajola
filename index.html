@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO básico -->
+  <meta name="description" content="AJOLÁ — Marca de ropa nacida en Andalucía. Lo nuestro, puesto." />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Theme color (barra del navegador en móvil) -->
+  <meta name="theme-color" content="#004D3F" />
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://somosajola.es/" />
+  <meta property="og:title"       content="AJOLÁ — Lo nuestro, puesto." />
+  <meta property="og:description" content="Una marca nacida en Andalucía para llevar nuestra tierra de otra manera." />
+  <meta property="og:locale"      content="es_ES" />
+  <!-- og:image: añadir cuando dispongas de imagen de marca (1200×630px) -->
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary" />
+  <meta name="twitter:title"       content="AJOLÁ — Lo nuestro, puesto." />
+  <meta name="twitter:description" content="Una marca nacida en Andalucía para llevar nuestra tierra de otra manera." />
+
+  <!-- Favicon — sustituir favicon.png por el archivo definitivo -->
+  <link rel="icon"             type="image/png" href="assest/favicon.png.png" />
+  <link rel="apple-touch-icon" href="assest/favicon.png.png" />
+
+  <title>AJOLÁ — Lo nuestro, puesto.</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --verde:  #004D3F;
+      --dorado: #D4AF37;
+      --fondo:  #FAF7EE;
+      --negro:  #1F1F1F;
+      --gris:   #6B6B6B;
+      --serif:  'Cormorant Garamond', Georgia, serif;
+      --sans:   'Inter', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--fondo);
+      color: var(--negro);
+      font-family: var(--sans);
+      font-weight: 300;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* ── Header ── */
+    header {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      padding: 2.5rem 2rem 0;
+    }
+
+    .logo-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .logo-simbolo img { display: block; }
+
+    .logo-nombre {
+      font-family: var(--serif);
+      font-size: 2.6rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      color: var(--verde);
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    /* ── Hero ── */
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 5rem 2rem 4rem;
+      max-width: 680px;
+      width: 100%;
+    }
+
+    .tagline {
+      font-family: var(--serif);
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--verde);
+      letter-spacing: 0.04em;
+      margin-bottom: 2rem;
+      opacity: 0;
+      transform: translateY(12px);
+      animation: fadeUp 0.9s ease 0.3s forwards;
+    }
+
+    .divisor {
+      width: 40px;
+      height: 1px;
+      background: var(--dorado);
+      margin: 0 auto 2rem;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.5s forwards;
+    }
+
+    .descripcion {
+      font-size: clamp(0.9rem, 2.2vw, 1.05rem);
+      line-height: 1.85;
+      color: var(--gris);
+      font-weight: 300;
+      max-width: 520px;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.7s forwards;
+    }
+
+    .badge {
+      margin-top: 3.5rem;
+      display: inline-block;
+      border: 1px solid var(--dorado);
+      color: var(--dorado);
+      font-family: var(--sans);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0.55rem 1.4rem;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.9s forwards;
+    }
+
+    /* ── Footer ── */
+    footer {
+      width: 100%;
+      padding: 2.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.9rem;
+      border-top: 1px solid rgba(0,77,63,0.1);
+    }
+
+    .social-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gris);
+    }
+
+    .social-link {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      font-weight: 400;
+      color: var(--verde);
+      text-decoration: none;
+      letter-spacing: 0.06em;
+      transition: color 0.25s ease;
+    }
+
+    .social-link:hover { color: var(--dorado); }
+
+    .footer-copy {
+      font-size: 0.68rem;
+      color: var(--gris);
+      letter-spacing: 0.08em;
+      opacity: 0.6;
+      margin-top: 0.5rem;
+    }
+
+    /* ── Animaciones ── */
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── prefers-reduced-motion ── */
+    @media (prefers-reduced-motion: reduce) {
+      .tagline,
+      .divisor,
+      .descripcion,
+      .badge {
+        animation: none;
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 480px) {
+      .logo-nombre { font-size: 2rem; }
+      main { padding: 3.5rem 1.5rem 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo-wrap">
+      <img src="assest/simbolo.svg.png" alt="Símbolo AJOLÁ" width="72" height="72">
+      <div class="logo-nombre">AJOLÁ</div>
+    </div>
+  </header>
+
+  <main>
+    <p class="tagline">Lo nuestro, puesto.</p>
+    <div class="divisor"></div>
+    <p class="descripcion">
+      Una marca nacida en Andalucía para llevar nuestra tierra de otra manera.<br><br>
+      Diseños originales inspirados en nuestra forma de hablar, nuestro humor,
+      nuestras costumbres y la diversidad de las ocho provincias andaluzas.
+    </p>
+    <span class="badge">Próximamente</span>
+  </main>
+
+  <footer>
+    <span class="social-label">Síguenos</span>
+    <a class="social-link" href="https://instagram.com/somosajola" target="_blank" rel="noopener">
+      @somosajola
+    </a>
+    <p class="footer-copy">© 2026 AJOLÁ · somosajola.es</p>
+  </footer>
+
+</body>
+</html>
