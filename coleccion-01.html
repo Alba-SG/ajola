@@ -426,8 +426,11 @@
     // ─────────────────────────────────────────────
     // RENDER
     // ─────────────────────────────────────────────
+    // Mapeo vista UI → nombre de archivo
+    const VISTA_ARCHIVO = { delantera: "frontal", trasera: "trasera" };
+
     function imgPath(slug, color, vista) {
-      return `assets/productos/${slug}/${color}-${vista}.webp`;
+      return `assets/productos/${slug}/${color}-${VISTA_ARCHIVO[vista]}.webp`;
     }
 
     function renderProducto(p, index) {
